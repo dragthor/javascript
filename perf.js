@@ -1,18 +1,15 @@
 var jsPerf = {
     perfResults: [],
+    
+    customMetric : undefined,
 
-    // Thanks SO and Zurb - https://stackoverflow.com/questions/3178892/get-function-name-in-javascript
-    functionName: function (fn) {
-        if (Function.prototype.name === undefined) {
-            var funcNameRegex = /function\s([^(]{1,})\(/;
-            var results = (funcNameRegex).exec((fn).toString());
-            return (results && results.length > 1) ? results[1].trim() : "";
-        }
-        else if (fn.prototype === undefined) {
-            return fn.constructor.name;
-        }
-        else {
-            return fn.prototype.constructor.name;
+    init: function(customMetric) {
+        var self = this;
+
+        self.perfResults = [];
+
+        if (typeof customMetric !== "undefined") {
+            self.customMetric = customMetric;
         }
     },
 
@@ -81,14 +78,36 @@ var jsPerf = {
             if (report.hasOwnProperty(r1)) {
                 var r2 = {
                     name: r1,
+                    count: report[r1].length,
                     min: Math.min(...report[r1]),
                     max: Math.max(...report[r1]),
                     avg: self.avg(report[r1]),
                     median: self.median(report[r1])
                 };
+
+                if (typeof self.customMetric !== "undefined") {
+                    r2.custom = self.customMetric(report[r1]);
+                }
                 
                 callback(r2);
             }
         }
-    }
+    },
+
+    // Thanks SO and Zurb
+    // https://stackoverflow.com/questions/3178892/get-function-name-in-javascript
+    // https://github.com/zurb/foundation-sites/blob/develop/js/foundation.core.js
+    functionName: function (fn) {
+        if (Function.prototype.name === undefined) {
+            var funcNameRegex = /function\s([^(]{1,})\(/;
+            var results = (funcNameRegex).exec((fn).toString());
+            return (results && results.length > 1) ? results[1].trim() : "";
+        }
+        else if (fn.prototype === undefined) {
+            return fn.constructor.name;
+        }
+        else {
+            return fn.prototype.constructor.name;
+        }
+    },
 };

@@ -22,11 +22,23 @@ function inlineLengthTest() {
     }
 }
 
-for (var f0 = 0; f0 < 100; f0++) {
+function total(items) {
+    var s = 0;
+
+    for (var i = 0; i < items.length; i++) {
+        s+= items[i];
+    }
+
+    return s;
+}
+
+jsPerf.init(total);
+
+for (var f0 = 0; f0 < 1000; f0++) {
     jsPerf.measure(upfrontLengthTest);
 }
 
-for (var f1 = 0; f1 < 100; f1++) {
+for (var f1 = 0; f1 < 1000; f1++) {
     jsPerf.measure(inlineLengthTest);
 }
 

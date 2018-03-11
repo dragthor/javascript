@@ -10,6 +10,8 @@ function factorialTest() {
     factorial(10000);
 }
 
+jsPerf.init();
+
 for (var f1 = 0; f1 < 100; f1++) {
     jsPerf.measure(factorialTest);
 }
