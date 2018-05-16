@@ -1,6 +1,6 @@
 var items = [];
 
-for (var t = 0; t < 100000; t++) {
+for (var t = 0; t < 200000; t++) {
     items.push({ value: t });
 }
 
@@ -22,7 +22,7 @@ function inlineLengthTest() {
     }
 }
 
-function total(items) {
+function sumTotal(items) {
     var s = 0;
 
     for (var i = 0; i < items.length; i++) {
@@ -32,13 +32,13 @@ function total(items) {
     return s;
 }
 
-jsPerf.init(total);
+var jsPerf = new JsPerf(sumTotal);
 
-for (var f0 = 0; f0 < 1000; f0++) {
+for (var f0 = 0; f0 < 10000; f0++) {
     jsPerf.measure(upfrontLengthTest);
 }
 
-for (var f1 = 0; f1 < 1000; f1++) {
+for (var f1 = 0; f1 < 10000; f1++) {
     jsPerf.measure(inlineLengthTest);
 }
 
