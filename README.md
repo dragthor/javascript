@@ -1,3 +1,5 @@
+This repository contains a JavaScript performance measuring tool (JsPerf) and some common data structures (JsQueue, JsLinkedList).
+
 # JsPerf
 
 A JavaScript performance measuring tool.
